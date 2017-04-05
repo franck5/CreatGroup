@@ -1,29 +1,55 @@
-$( document ).ready(function() {
+$(document).ready(function(){
 
-	$('#result').append( "<tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr>" );
-	
+    var Prenom = ["Florian","Maxime","Jordy","Mouad","Raphael","Marco","Grégory","Morel","Océane","Emilie","Dimitri","Julien","Elodie","Franck","Romain"];
 
-	var Prenom=['Greg','Morel','Oceane','Marco', 'Mouad', 'Raphael', 'Romain','Franck','Elodie','Julien','Dimitri','emilie', 'Jordi','Maxime','Flo'];
+    var tables = ["table 1","table 2","table 3","table 4","table 5"];
 
-	var Number=[1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5];
+    var numeroTable= 1;
 
-	for(var i=Prenom.length-1; i>=1; i--){
-	
-		var hasard=Math.floor(Math.random()*(i+1));
-	
-		var sauve=Prenom[i];
-		Prenom[i]=Prenom[hasard];
-		Prenom[hasard]=sauve;
 
-	
+    function save() {
+	localStorage.setItem('Prenom', JSON.stringify(Prenom));
+	localStorage.setItem('tables', JSON.stringify(tables));
+};
 
-}
+
+
+   function shuffle(Prenom) {
+		var j, x, i;
+		for (i = Prenom.length; i; i--) {
+			j = Math.floor(Math.random() * i);
+			x = Prenom[i - 1];
+			Prenom[i - 1] = Prenom[j];
+			Prenom[j] = x;
+		}
+	}
+    
+
+    $("#button").click(function(){
+
 		
-		var prenomnumber= [Prenom[0] + " " + Number[0]]
-	
-		console.log(prenomnumber);
-	
-		console.log(Prenom.toString());
+		shuffle(Prenom);
+		
 
-		console.log(Number.toString());
-})
+
+		for (var i = 0 ; i < Prenom.length  ; i++) {
+			var nomApprenants = Prenom[i];
+			console.log(Prenom[i] + " Table " + numeroTable);
+
+			if ( numeroTable >= 5 ){
+				numeroTable = 1;
+			}
+			else{ 
+				numeroTable++;
+			}
+       $("#inserer").append('<tr><td>' + nomApprenants + '</td><td>' + numeroTable +  '</td></tr>');
+		}
+    	save();
+	});
+
+	$("#Suprimer").click(function(){
+		$("#inserer").html("");
+	});
+
+
+});
